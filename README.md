@@ -5,7 +5,7 @@ Magic the Gathering has been a card game for about 20 years (https://en.wikipedi
 
 # Rules
  
-A deck is a collection of at least 20 cards and a maximum of 30. (60 in the game, but it's easier with a smaller number ;) )
+A deck is a collection of at least 20 cards and a maximum of 30. (60 in the game, but it's easier with a smaller number ;)
 Land don't have a mana cost
 We should display the average mana cost of the deck even if the number of cards has not reached 20.
 We can't have more than 30 cards in a deck.
