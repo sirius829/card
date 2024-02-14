@@ -1,9 +1,17 @@
+import { Box, Typography } from "@mui/material";
 import React from "react";
 
 const NoCardFound: React.FC = () => {
 
     return (
-        <>No Card Found!</>
+        <Box sx={{
+            minHeight: "40vh",
+            display: 'flex',
+            justifyContent: 'center',
+            alignItems: 'center'
+        }}>
+            <Typography variant="h2">No Card Found!</Typography>
+        </Box>
     )
 }
 

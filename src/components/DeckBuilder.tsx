@@ -1,42 +1,68 @@
 import { Delete } from '@mui/icons-material';
-import { Box, IconButton, List, ListItem, Typography } from '@mui/material';
-import React, { useState } from 'react';
+import { Box, Button, Container, Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle, IconButton, List, ListItem, Typography } from '@mui/material';
+import React, { useContext, useEffect, useState } from 'react';
+import { CardContext } from '..';
+import Grid2 from '@mui/material/Unstable_Grid2';
+import { CardInterface } from '../interfaces';
+import CardComponent from './Card';
+import NoCardFound from './NoCardFound';
+import { calculateManaCost } from '../utils/util';
 
 const DeckBuilder: React.FC = () => {
-    const [deck, setDeck] = useState<string[]>([]);
-    const [dense, setDense] = useState<boolean>(false);
+    const { cards, removeCard } = useContext(CardContext);
+    const [open, setOpen] = useState<boolean>(false);
+    const [onRemovingCard, setRemovingCard] = useState<CardInterface | undefined>();
+    const [averageCost, setCost] = useState<number>(0);
 
-    const addToDeck = (card: string) => {
-        setDeck([...deck, card]);
+    useEffect(() => {
+        setCost(calculateManaCost(cards));
+    }, [cards]);
+    const handleCloseModal = () => {
+        setOpen(false);
+        setRemovingCard(undefined);
+    }
+    const remove = (removingCard: CardInterface) => {
+        setRemovingCard(removingCard);
+        setOpen(true);
     }
 
-    const removeFromDeck = (card: string) => {
-        const updatedDeck = deck.filter((c) => c !== card);
-        setDeck(updatedDeck);
+    const removeFromDeck = () => {
+        setOpen(false);
+        if (onRemovingCard)
+            removeCard(onRemovingCard.id);
     }
 
     return (
-        <Box>
+        <Container>
             <Typography variant='h2'>
                 Deck Builder
             </Typography>
-            <Box>
-                <Typography variant='h3'>Current Decker</Typography>
-                <List dense={dense}>
-                    {deck.map((value: string, index: number) => (
-                        <ListItem key={index}
-                            secondaryAction={
-                                <IconButton edge="end" aria-label='delete' onClick={() => removeFromDeck(value)}>
-                                    <Delete />
-                                </IconButton>
-                            }
-                        >
-                            <Typography variant='body1'>{value}</Typography>
-                        </ListItem>
+            <Typography variant='body1' sx={{marginBottom: "24px"}}>
+                Average Mana Cost: {averageCost}
+            </Typography>
+            {cards.length ? (
+                <Grid2 container spacing={2}>
+                    {cards.map((card: CardInterface, index: number) => (
+                        <CardComponent card={card} key={index} addCard={remove} />
                     ))}
-                </List>
-            </Box>
-        </Box>
+                </Grid2>
+            ) : <NoCardFound />}
+            <Dialog
+                open={open}
+                onClose={handleCloseModal}
+            >
+                <DialogTitle>Add a card to the Deck</DialogTitle>
+                <DialogContent>
+                    <DialogContentText>
+                        Are you going to add this card to Deck?
+                    </DialogContentText>
+                </DialogContent>
+                <DialogActions>
+                    <Button onClick={handleCloseModal}>Cancel</Button>
+                    <Button onClick={removeFromDeck}>Add</Button>
+                </DialogActions>
+            </Dialog>
+        </Container>
     )
 }
 
