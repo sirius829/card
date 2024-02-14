@@ -1,6 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
-import { Box, Button, Input, Typography } from '@mui/material';
+import { Box, Button, Input, InputAdornment, TextField, Typography } from '@mui/material';
 import { debounce } from 'lodash';
+import { Search } from '@mui/icons-material';
 
 interface Props {
     onSearch: (searchTerm: string) => void
@@ -19,16 +20,21 @@ const CardSearch: React.FC<Props> = ({ onSearch }) => {
       }, [searchTerm]);
     
     return (
-        <Box>
-            <Typography variant='h2'>
+        <Box sx={{marginBottom: '12px'}}>
+            <Typography variant='h5'>
                 Card Search
             </Typography>
-            <Input
+            <TextField 
                 type='text'
                 value={searchTerm}
+                variant='outlined'
+                InputProps={{
+                    startAdornment: <InputAdornment position='start'><Search /></InputAdornment>
+                }}
                 onChange={(e) => {
                     setSearchTerm(e.target.value);
                 }}
+                size='small'
             />
         </Box>
     );

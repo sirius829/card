@@ -2,20 +2,69 @@ import React, { Suspense, lazy } from 'react';
 import './styles/App.css';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CardList from './components/CardList';
+import Navbar from './components/Navbar';
+import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import DeckBuilder from './components/DeckBuilder';
 
-const CardSearch = lazy(() => import('./components/CardSearch'));
-const DeckerBuiler = lazy(() => import('./components/DeckBuilder'));
-const AverageManaCost = lazy(() => import('./components/AverageManaCost'));
+interface TabPanelProps {
+  children?: React.ReactNode;
+  index: number;
+  value: number;
+}
 
-function App() {
+function CustomTabPanel(props: TabPanelProps) {
+  const { children, value, index, ...other } = props;
+
   return (
-      <Suspense fallback={<div>Loading...</div>}>
-        <Routes>
-          <Route path='/' element={<CardList />} />
-          <Route path='/deck' element={<DeckerBuiler />} />
-          <Route path="/average-mana-cost" element={<AverageManaCost deck={[]} />} />
-        </Routes>
-      </Suspense>
+    <div
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}
+    >
+      {value === index && (
+        <Box sx={{ p: 3 }}>
+          <Typography>{children}</Typography>
+        </Box>
+      )}
+    </div>
+  );
+}
+
+function a11yProps(index: number) {
+  return {
+    id: `simple-tab-${index}`,
+    'aria-controls': `simple-tabpanel-${index}`,
+  };
+}
+function App() {
+  const [value, setValue] = React.useState(0);
+
+  const handleChange = (event: React.SyntheticEvent, newValue: number) => {
+    setValue(newValue);
+  };
+  return (
+    <Box sx={{ width: '100%' }}>
+      <Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+        <Container>
+          <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+            <Tab label="Search Cards" {...a11yProps(0)} />
+            <Tab label="Deck" {...a11yProps(1)} />
+            {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
+          </Tabs>
+        </Container>
+      </Box>
+      <CustomTabPanel value={value} index={0}>
+        <CardList />
+      </CustomTabPanel>
+      <CustomTabPanel value={value} index={1}>
+        <DeckBuilder />
+      </CustomTabPanel>
+      {/* <CustomTabPanel value={value} index={2}>
+        <AverageManaCost deck={[]} />
+      </CustomTabPanel> */}
+    </Box>
   );
 }
 
