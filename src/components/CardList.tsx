@@ -80,7 +80,7 @@ const CardList: React.FC = () => {
         if (onAddingCard) {
             if (cards.length >= 30) {
                 setMessage("You can't add card anymore.");
-            } else if (cards.findIndex((card) => card.id === onAddingCard.id)) {
+            } else if (cards.findIndex((card) => card.id === onAddingCard.id) >= 0) {
                 setMessage("This card was already added.");
             } else {
                 addCard(onAddingCard);

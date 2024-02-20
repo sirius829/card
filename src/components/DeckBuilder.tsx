@@ -51,15 +51,15 @@ const DeckBuilder: React.FC = () => {
                 open={open}
                 onClose={handleCloseModal}
             >
-                <DialogTitle>Add a card to the Deck</DialogTitle>
+                <DialogTitle>Remove a card from the Deck</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Are you going to add this card to Deck?
+                        Are you going to remote this card from Deck?
                     </DialogContentText>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={handleCloseModal}>Cancel</Button>
-                    <Button onClick={removeFromDeck}>Add</Button>
+                    <Button onClick={removeFromDeck}>Remove</Button>
                 </DialogActions>
             </Dialog>
         </Container>
