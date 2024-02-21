@@ -1,9 +1,7 @@
-import React, { Suspense, lazy } from 'react';
+import React from 'react';
 import './styles/App.css';
-import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import CardList from './components/CardList';
-import Navbar from './components/Navbar';
-import { Box, Container, Tab, Tabs, Typography } from '@mui/material';
+import { Box, Container, Tab, Tabs } from '@mui/material';
 import DeckBuilder from './components/DeckBuilder';
 
 interface TabPanelProps {
@@ -25,7 +23,7 @@ function CustomTabPanel(props: TabPanelProps) {
     >
       {value === index && (
         <Box sx={{ p: 3 }}>
-          <Typography>{children}</Typography>
+          {children}
         </Box>
       )}
     </div>
@@ -51,7 +49,6 @@ function App() {
           <Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
             <Tab label="Search Cards" {...a11yProps(0)} />
             <Tab label="Deck" {...a11yProps(1)} />
-            {/* <Tab label="Item Three" {...a11yProps(2)} /> */}
           </Tabs>
         </Container>
       </Box>
@@ -61,9 +58,6 @@ function App() {
       <CustomTabPanel value={value} index={1}>
         <DeckBuilder />
       </CustomTabPanel>
-      {/* <CustomTabPanel value={value} index={2}>
-        <AverageManaCost deck={[]} />
-      </CustomTabPanel> */}
     </Box>
   );
 }

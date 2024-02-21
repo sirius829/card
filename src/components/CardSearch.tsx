@@ -1,5 +1,5 @@
-import React, { useCallback, useEffect, useState } from 'react';
-import { Box, Button, Input, InputAdornment, TextField, Typography } from '@mui/material';
+import React, { useEffect, useState } from 'react';
+import { Box, InputAdornment, TextField, Typography } from '@mui/material';
 import { debounce } from 'lodash';
 import { Search } from '@mui/icons-material';
 
@@ -21,7 +21,7 @@ const CardSearch: React.FC<Props> = ({ onSearch }) => {
     
     return (
         <Box sx={{marginBottom: '12px'}}>
-            <Typography variant='h5'>
+            <Typography component='h5' variant='h5'>
                 Card Search
             </Typography>
             <TextField 
