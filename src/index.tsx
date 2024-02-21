@@ -19,7 +19,6 @@ export const CardContext = createContext<CardContextProps>({
 
 const CardProvider: React.FC = () => {
   const [cards, setCardList] = useState<CardInterface[]>([]);
-  console.log(cards);
   const addCard = (card: CardInterface) => {
     setCardList((prevCards) => [...prevCards.filter((prevCard) => prevCard.id !== card.id), card]);
   }
@@ -41,7 +40,6 @@ root.render(
   <BrowserRouter>
     <CardProvider />
   </BrowserRouter>
-
   // </React.StrictMode>
 );
 
